@@ -1,0 +1,103 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+public class Player {
+
+	int j = 1;
+	String name;
+	ArrayList<String> cardsPlayer = new ArrayList<String>(200);
+	ArrayList<String> cardsDealer = new ArrayList<String>(200);
+
+	int valuePlayer;
+	int valueDealer;
+	int valuePlayer1;
+	int valueDealer1;
+	Cards card = new Cards();
+
+	public Player(String name) {
+
+		this.name = name;
+	}
+
+	int sum;
+	int[] value;
+
+	public int getCards(ArrayList<String> cardsPlayer, int valuePlayer, List<String> list) {
+
+		System.out.println("The List Of The Cards" + card.list);
+		System.out.println("");
+
+		// get 2 cards
+		// card.shuffleCards();
+		cardsPlayer.add(card.list.get(0));
+
+		cardsPlayer.add(card.list.get(1));
+		card.list.remove(0);
+
+		card.list.remove(0);
+		System.out.println(name + " " + ": you have the Cards" + cardsPlayer);
+
+		System.out.println("");
+
+		valuePlayer1 = card.getValue(cardsPlayer, valuePlayer, card.list);
+
+		// valuePlayer=Arrays.stream(sumValue).sum();
+		System.out.println("Your current score is: " + valuePlayer1);
+
+		if (valuePlayer1 > 21) {
+			System.out.println(name + " :You lost");
+
+		}
+		// else {
+		System.out.println("");
+		System.out.println("The remaining Cards:" + card.list);
+		
+		System.out.println(name + " " + ":Do you want to get two more Cards?Y,N");
+		Scanner input = new Scanner(System.in);
+
+		String answer = input.next();
+		if (answer.equalsIgnoreCase("n")) {
+			System.out.println("Your play ends here");
+		} else {
+
+			// get 1 card
+			do {
+
+				cardsPlayer.add(card.list.get(0));
+				card.list.remove(0);
+				System.out.println("");
+				System.out.println(name + " " + ":you have the Cards" + cardsPlayer);
+
+				valuePlayer = 0;
+				valuePlayer1 = card.getValue(cardsPlayer, valuePlayer, card.list);
+				System.out.println("");
+				System.out.println("Your current score is: " + valuePlayer1);
+				if (valuePlayer1 > 21) {
+					System.out.println(name + ":You lost");
+					break;
+
+				}
+				
+
+				System.out.println(card.list);
+				System.out.println(name + " " + ":Do you want to get two more Cards?Y,N");
+				String answer1 = input.next();
+				if (answer1.equalsIgnoreCase("n")) {
+					break;
+				}
+
+			}
+
+			while (answer.equalsIgnoreCase("y"));
+		}
+
+		list = card.list;// }
+
+		return valuePlayer1;
+	}
+}
